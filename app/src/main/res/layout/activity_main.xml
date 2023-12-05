@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/imagenGaleria"
-        android:layout_width="336dp"
-        android:layout_height="255dp"
+        android:layout_width="332dp"
+        android:layout_height="282dp"
         android:layout_marginBottom="168dp"
         app:layout_constraintBottom_toTopOf="@+id/botonGaleria"
         app:layout_constraintEnd_toEndOf="parent"
