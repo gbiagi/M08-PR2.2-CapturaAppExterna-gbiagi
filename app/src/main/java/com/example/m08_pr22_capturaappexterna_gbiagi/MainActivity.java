@@ -16,13 +16,13 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> someActivityResultLauncher;
+    ActivityResultLauncher<Intent> LauncherCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button botonGaleria = findViewById(R.id.botonGaleria);
-        //ImageView imagenGaleria = findViewById(R.id.imagenGaleria);
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        Button botonCamara = findViewById(R.id.botonCamara);
+
 
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void openSomeActivityForResult(View view) {
-
-
         //Create Intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/jpg");
