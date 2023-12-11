@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -15,15 +16,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
+    ActivityResultLauncher<Intent> galleryLauncher;
     ActivityResultLauncher<Intent> LauncherCamera;
+    ImageView imageView = findViewById(R.id.imagenGaleria);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button botonGaleria = findViewById(R.id.botonGaleria);
-        someActivityResultLauncher = registerForActivityResult(
+        galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -32,27 +34,47 @@ public class MainActivity extends AppCompatActivity {
                             // There are no request codes
                             Intent data = result.getData();
                             Uri uri = data.getData();
-                            ImageView imageView = findViewById(R.id.imagenGaleria);
                             imageView.setImageURI(uri);
                         }
                     }
                 });
         Button botonCamara = findViewById(R.id.botonCamara);
+        LauncherCamera = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
 
+                    }
+                });
 
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSomeActivityForResult(v);
+                openGaleria(v);
+            }
+        });
+        botonCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
-    public void openSomeActivityForResult(View view) {
+    public void openGaleria(View view) {
         //Create Intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         //Launch activity to get result
-        someActivityResultLauncher.launch(intent);
+        galleryLauncher.launch(intent);
     }
+    protected void openCamera(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
+        }
+    }
+
 }
