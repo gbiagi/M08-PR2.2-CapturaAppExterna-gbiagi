@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
         //Launch activity to get result
         galleryLauncher.launch(intent);
     }
-    protected void openCamera(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
-        }
+    protected void openCamera(View view) {
+        //Create Intent
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        //Launch activity to get result
+        galleryLauncher.launch(intent);
     }
 
 }
