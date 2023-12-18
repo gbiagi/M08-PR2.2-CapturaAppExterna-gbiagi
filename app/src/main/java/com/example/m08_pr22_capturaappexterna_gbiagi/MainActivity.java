@@ -19,12 +19,12 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> galleryLauncher;
     ActivityResultLauncher<Intent> LauncherCamera;
-    ImageView imageView = findViewById(R.id.imagenGaleria);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageView imageView = findViewById(R.id.imagenGaleria);
         Button botonGaleria = findViewById(R.id.botonGaleria);
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -45,7 +45,13 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            Bundle extras = data.getExtras();
+                            Bitmap bitmap = (Bitmap) extras.get("data");
+                            imageView.setImageBitmap(bitmap);
+                        }
                     }
                 });
 
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         botonCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openCamera(v);
             }
         });
     }
