@@ -76,12 +76,13 @@ public class MainActivity extends AppCompatActivity {
         //Launch activity to get result
         galleryLauncher.launch(intent);
     }
-    protected void openCamera(View view) {
+    public void openCamera(View view) {
         //Create Intent
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         //Launch activity to get result
         galleryLauncher.launch(intent);
     }
+
 
 }
