@@ -18,7 +18,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> galleryLauncher;
-    ActivityResultLauncher<Intent> LauncherCamera;
+    ActivityResultLauncher<Intent> cameraLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         Button botonCamara = findViewById(R.id.botonCamara);
-        LauncherCamera = registerForActivityResult(
+        cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -79,10 +79,8 @@ public class MainActivity extends AppCompatActivity {
     public void openCamera(View view) {
         //Create Intent
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        //intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         //Launch activity to get result
-        galleryLauncher.launch(intent);
+        cameraLauncher.launch(intent);
     }
-
-
 }
